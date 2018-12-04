@@ -11,11 +11,11 @@ let threeplatform;
 
 
 function setup() {
-  createCanvas(1280, 500);
-  me = new Ball(50, 50, 3);
+  createCanvas(700, 500);
+  me = new Ball(50, 50, 3, .5);
 
-for (let i= 0; i<4; i++){
-  let p = new Platform(random(100,800),random(300,450));
+for (let i= 0; i<6; i++){
+  let p = new Platform(random(100,700),random(300,450));
   platforms.push(p);
   print(platforms);
 
@@ -44,14 +44,15 @@ function draw(){
 
   for (let i = 0; i<platforms.length; i++){
     platforms[i].drawPlatform();
+
   }
 
 }
-for (let i = 0; i < balls.length; i++) {
-        balls[i].bounceBall();
-
-
-  }
+// for (let i = 0; i < balls.length; i++) {
+//         balls[i].bounceBall();
+//
+//
+//   }
 
 // make the paddle and attach it to the mouse
 // function paddle(){
@@ -63,10 +64,11 @@ for (let i = 0; i < balls.length; i++) {
 //Ball class
 class Ball {
 
-	constructor(x,y, speed){ //every Ball needs an x value, a y value, and a speed
+	constructor(x,y, speed, drop){ //every Ball needs an x value, a y value, and a speed
 		    this.x = x;
     		this.y = y;
         this.speed = speed;
+        this.drop = drop;
 	}
 
 	drawMe(){  // draw the moving ball
@@ -80,7 +82,8 @@ class Ball {
 
 
 	moveMe(){
-    	this.y = this.y+this.speed;
+
+  	// this.y = this.y+this.drop;
 
     if (keyIsDown(RIGHT_ARROW)) { //if you hold the up arrow, move up by speed
        this.x += this.speed;
@@ -92,20 +95,22 @@ class Ball {
   }
 
 
-  //if the ball hits the paddle, change the speed value to negative (send it in the opposite direction)
+//  if the ball hits the paddle, change the speed value to negative (send it in the opposite direction)
   bounceBall(){
 
     for (let i = 0; i<platforms.length; i++){
+          if (this.x >= platforms[i].x-20 && this.x <= platforms[i].x+20 && this.y >= platforms[i].y-5 && this.y <= platforms[i].y+5){
+            this.drop =-this.drop;
+            this.y = this.y+this.drop;
+            print("hit platform "+i+" and switched direction to "+this.drop);
+          }
 
-
-    if (this.x >= platforms[i].x-20 && this.x <= platforms[i].x+20 && this.y > platforms[i].y-5 && this.y < platforms[i].x+5){
-      this.speed =-this.speed;
-      }
-
-    else if (this.y < 40 ){
-      this.speed =-this.speed;
-    }
-    else {
+         else if (this.y <= 40 ){
+               this.drop =-this.drop;
+               this.y = this.y+this.drop;
+          }
+        else {
+          	this.y = this.y+this.drop;
 
     }
   }
@@ -124,13 +129,6 @@ class Ball {
     strokeWeight(10);
     line(this.x, this.y,this.x+40, this.y);
   }
-
-    // bounceOff(){
-    //   if (this.x >= platforms && this.x <= platforms && this.y - platforms && this.y + platforms);
-    //     this.speed=-this.speed;
-    // }
-
-
 
 
 }
