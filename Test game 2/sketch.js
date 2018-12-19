@@ -1,12 +1,9 @@
-//create an empty array called balls
-let balls = [];
+
 let platforms = [];
 
 //create a variable to hold your Ball
 let me;
-let oneplatform;
-let twoplatform;
-let threeplatform;
+
 
 
 
@@ -19,47 +16,29 @@ for (let i= 0; i<6; i++){
   platforms.push(p);
   print(platforms);
 
-}
-  // oneplatform = new Platform (100, 300);
-  // twoplatform = new Platform (400, 390);
-  // threeplatform = new Platform (800, 450);
-
+  }
 }
 
 
 function draw(){
 	background(220);
 
-//make one Ball called me
-
-
   me.drawMe();
   me.moveMe();
   me.bounceBall();
 
 
-  // oneplatform.drawPlatform();
-  // twoplatform.drawPlatform();
-  // threeplatform.drawPlatform();
-
   for (let i = 0; i<platforms.length; i++){
     platforms[i].drawPlatform();
+    stroke(0);
+    strokeWeight(1);
+    fill(0);
+    textSize(30);
+    text(i,platforms[i].x+20, platforms[i].y-10);
 
   }
 
 }
-// for (let i = 0; i < balls.length; i++) {
-//         balls[i].bounceBall();
-//
-//
-//   }
-
-// make the paddle and attach it to the mouse
-// function paddle(){
-//   stroke("black");
-//   strokeWeight(10);
-//   line(mouseX-20,mouseY,mouseX+20,mouseY);
-// }
 
 //Ball class
 class Ball {
@@ -79,17 +58,13 @@ class Ball {
 
 	}
 
-
-
 	moveMe(){
 
-  	// this.y = this.y+this.drop;
-
-    if (keyIsDown(RIGHT_ARROW)) { //if you hold the up arrow, move up by speed
+    if (keyIsDown(RIGHT_ARROW)) {
        this.x += this.speed;
     }
 
-    if (keyIsDown(LEFT_ARROW)) { // if you hold the down arrow, move down by speed
+    if (keyIsDown(LEFT_ARROW)) {
         this.x -= this.speed;
     }
   }
@@ -119,7 +94,7 @@ class Ball {
 }
 
   class Platform {
-    constructor(x,y){ //every Ball needs an x value, a y value, and a speed
+    constructor(x,y){
   		    this.x = x;
       		this.y = y;
         }
